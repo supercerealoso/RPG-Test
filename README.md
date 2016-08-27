@@ -1,2 +1,2 @@
 # RPGTest
-Tests of RPG code
+Tests of RPG battle code. Uses Phaser for sprite animation.
