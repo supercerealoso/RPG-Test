@@ -2,8 +2,8 @@
  * Computes how much damage a character would do
  * to another character in case of a successful attack
  */
-function get_hit_points(attacker, defender) {
-    var hit = attacker.strength * 2 - defender.defense;
+function get_hit_points(attacker, defender, technique) {
+    var hit = attacker.strength + technique.strength - defender.defense;
     if (hit < 0)
         hit = 0;
     return hit;
@@ -12,10 +12,11 @@ function get_hit_points(attacker, defender) {
  * Computes the probability of a succesful attack
  * Integer from 0 to 100
  */
-function get_hit_rate(attacker, defender) {
-    var attacker_hit = attacker.skill + attacker.speed;
+function get_hit_rate(attacker, defender, technique) {
+    var attacker_hit = attacker.skill + technique.skill +
+            attacker.speed + technique.speed;
     var defender_hit = defender.skill + defender.speed;
-    var hit = attacker_hit * 3.5 - defender_hit;
+    var hit = attacker_hit * 1.75 - defender_hit;
     hit = Math.floor(hit);
     if (hit < 0)
         hit = 0;
@@ -26,22 +27,24 @@ function get_hit_rate(attacker, defender) {
 /*
  * Attack Prediction class
  */
-function AttackPrediction(attacker, defender) {
-    this.hit_points = get_hit_points(attacker, defender);
-    this.hit_rate = get_hit_rate(attacker, defender);
+function AttackPrediction(attacker, defender, technique) {
+    this.hit_points = get_hit_points(attacker, defender, technique);
+    this.hit_rate = get_hit_rate(attacker, defender, technique);
     this.attacker = attacker;
     this.defender = defender;
+    this.technique = technique;
 }
 /*
  * Attack class
  */
-function Attack(attacker, defender) {
+function Attack(attacker, defender, technique) {
     this.attacker = attacker;
     this.defender = defender;
-    var hit_rate = get_hit_rate(attacker, defender);
+    this.technique = technique;
+    var hit_rate = get_hit_rate(attacker, defender, technique);
     if (dice(100) <= hit_rate) {
         this.success = true;
-        this.hit_points = get_hit_points(attacker, defender);
+        this.hit_points = get_hit_points(attacker, defender, technique);
         defender.HP_current -= this.hit_points;
     } else {
         this.success = false;

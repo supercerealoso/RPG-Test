@@ -15,4 +15,7 @@ function Character() {
     this.defense = 0; // Endure physical attacks
     this.skill = 0;
     this.speed = 0;
+
+    // Techniques array
+    this.techniques = [new Technique()];
 }
