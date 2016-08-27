@@ -15,6 +15,12 @@
     margin: 5px 0px 0px 0px;
     padding: 5px 0px 5px 0px;
     font-family: monospace;
+    text-align: center;
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 .btn:hover {
     border: 1px gray solid;
